@@ -9,20 +9,12 @@ export const omit = (obj, ...fields) => {
   const arr = Object.entries(obj);
   let sortedObj = {};
 
-  for (let i = 0; i < arr.length; i++) {
-    let key = arr[i][0];
-    let isMatch = false;
-
-    for (let j = 0; j < fields.length; j++) {
-      if (key === fields[j]) {
-        isMatch = true;
-        break;
-      }
+  for (let item of arr) {
+    if( !fields.includes(item[0]) ) {
+      sortedObj[ item[0] ] = item[1];
     };
-
-    if (!isMatch) {
-      sortedObj[key] = arr[i][1];
-    }
   };
   return sortedObj;
 };
+
+

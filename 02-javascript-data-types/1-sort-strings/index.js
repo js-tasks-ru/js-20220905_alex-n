@@ -9,12 +9,9 @@ export function sortStrings(arr, param = 'asc') {
   const collator = new Intl.Collator("ru", { caseFirst: "upper" });
   let arrCopy = [...arr];
 
-  if (param === 'asc') {
-    return arrCopy.sort(collator.compare);
-  };
+  const result = (param === 'desc')
+    ? arrCopy.sort((a, b) => collator.compare(b, a))
+    : arrCopy.sort(collator.compare);
 
-  if (param === 'desc') {
-    return arrCopy.sort(collator.compare).reverse();
-  };
+  return result;
 };
-
