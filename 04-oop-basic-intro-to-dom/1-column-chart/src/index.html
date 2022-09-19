@@ -19,15 +19,18 @@
       const ordersData = [];
       const salesData = [30, 40, 20, 80, 35, 15];
       const customersData = [100, 90, 80, 35, 90, 25];
+      const formatHeading = value => `$${new Intl.NumberFormat('en-EN').format(value)}`;
 
       const ordersChart = new ColumnChart({
         data: ordersData,
+        link: '/sales'
       });
 
       const salesChart = new ColumnChart({
         data: salesData,
         label: "sales",
         value: 243437,
+        formatHeading,
       });
 
       const customersChart = new ColumnChart({

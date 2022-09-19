@@ -1,41 +1,30 @@
 export default class ColumnChart {
   chartHeight = 50
 
-  constructor (obj) {
-    if (obj) {
-      for (const key in obj) {
-        if (key === 'data') {
-          this.data = obj[key];
-        } else if (key === 'label') {
-          this.label = obj[key];
-        } else if (key === 'value') {
-          this.value = obj[key];
-        } else if (key === 'link') {
-          this.link = obj[key];
-        } else if (key === 'formatHeading') {
-          this.formatHeading = obj[key];
-        }
-      }
-    }
+  constructor({
+    data = [],
+    label = "",
+    link = "",
+    value = 0,
+    formatHeading = data => data,
+  } = {}) {
+    this.data = data;
+    this.label = label;
+    this.link = link;
+    this.value = formatHeading(value);
 
-    if (this.formatHeading) {
-      this.value = this.formatHeading(this.value);
-    }
-
-    if (this.data && this.data.length > 0) {
+    if (this.data.length > 0) {
       this.columnProps = this.getColumnProps(this.data);
     }
-
     this.element = this.render();
   }
 
-  getDataList () {
+  getDataList() {
     if (this.columnProps) {
       return this.columnProps.map(item =>
         `<div style="--value: ${item.value}" data-tooltip="${item.percent}"></div>`
       ).join('');
-    }
-    return;
+    };
   }
 
   getTemplate() {
@@ -58,18 +47,15 @@ export default class ColumnChart {
 
     wrapper.classList.add('column-chart')
 
-    if (this.label === 'sales') {
-      this.value = `$${new Intl.NumberFormat('en-EN').format(this.value)}`
-    }
-
-    if (this.label !== 'orders') {
+    if (this.columnProps) {
       wrapper.innerHTML = this.getTemplate();
-      wrapper.querySelector('.column-chart__link').remove();
-    }
-
-    if (!this.columnProps) {
+    } else {
       wrapper.classList.add('column-chart_loading')
       wrapper.innerHTML = this.getTemplate();
+    }
+
+    if (!this.link) {
+      wrapper.querySelector('.column-chart__link').remove();
     }
     return wrapper;
   }
@@ -84,7 +70,7 @@ export default class ColumnChart {
 
   getColumnProps(data) {
     const maxValue = Math.max(...data);
-    const scale = 50 / maxValue;
+    const scale = this.chartHeight / maxValue;
 
     return data.map(item => {
       return {
@@ -107,6 +93,6 @@ export default class ColumnChart {
 
     this.element.querySelector('.column-chart__chart').remove();
 
-    chartContainer.append(newData.firstElementChild)
+    chartContainer.append(newData.firstElementChild);
   }
 }
