@@ -137,6 +137,7 @@ export default class SortableTable {
       result[name] = subElement;
     };
 
+    console.log(result)
     return result;
   }
 

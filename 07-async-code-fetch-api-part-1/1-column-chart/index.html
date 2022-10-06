@@ -37,18 +37,22 @@
       startInput.value = from.toISOString().split('T')[0];
       endInput.value = to.toISOString().split('T')[0];
 
+      const formatHeading = value => `$${new Intl.NumberFormat('en-EN').format(value)}`;
+
       const ordersChart = new ColumnChart({
         url: 'api/dashboard/orders',
         range: {
           from,
-          to
+          to,
         },
         label: 'orders',
-        link: '#'
+        link: '#',
       });
 
       loadOrders.addEventListener('click', () => {
         ordersChart.update(new Date(start.value), new Date(end.value))
+        salesChart.update(new Date(start.value), new Date(end.value))
+        customersChart.update(new Date(start.value), new Date(end.value))
       });
 
       const salesChart = new ColumnChart({
@@ -58,7 +62,7 @@
           to
         },
         label: 'sales',
-        formatHeading: data => `$${data}`
+        formatHeading
       });
 
       const customersChart = new ColumnChart({
