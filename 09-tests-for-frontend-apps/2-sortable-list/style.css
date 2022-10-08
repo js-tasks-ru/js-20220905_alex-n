@@ -28,7 +28,7 @@ body {
 /* SortableList styles */
 .sortable-list {
   position: relative;
-  padding: 0;
+  padding: 50px;
   margin: 12px 0;
 }
 
@@ -46,6 +46,7 @@ body {
   margin: 16px 0;
   position: relative;
   box-sizing: border-box;
+  user-select: none;
 }
 
 .sortable-list__item[data-grab-handle],
