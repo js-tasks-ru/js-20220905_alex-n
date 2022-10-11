@@ -213,7 +213,7 @@ export default class SortableTable {
 
   async sortOnServer(id, order, start, end) {
     const data = await this.loadData(id, order, start, end);
-
+    console.log(data);
     this.renderRows(data);
   }
 
