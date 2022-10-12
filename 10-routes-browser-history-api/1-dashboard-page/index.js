@@ -64,28 +64,12 @@ export default class Page {
     rangePickerContainer.append(rangePicker.element);
   }
 
-  getDefaultRange() {
-    const now = new Date();
-    const to = new Date();
-    const from = new Date(now.setMonth(now.getMonth() - 1));
-
-    return { from, to };
-  }
-
   getColumnChart() {
     const ordersContainer = this.element.querySelector('[data-element="ordersChart"]');
     const salesContainer = this.element.querySelector('[data-element="salesChart"]');
     const customersContainer = this.element.querySelector('[data-element="customersChart"]');
 
-    const getRange = () => {
-      const now = new Date();
-      const to = new Date();
-      const from = new Date(now.setMonth(now.getMonth() - 1));
-
-      return { from, to };
-    };
-
-    const { from, to } = getRange();
+    const { from, to } = this.getDefaultRange();
 
     const formatHeading = value => `$${new Intl.NumberFormat('en-EN').format(value)}`;
 
@@ -139,6 +123,14 @@ export default class Page {
     tableContainer.append(sortableTable.element);
 
     this.components.sortableTable = sortableTable;
+  }
+
+  getDefaultRange() {
+    const now = new Date();
+    const to = new Date();
+    const from = new Date(now.setMonth(now.getMonth() - 1));
+
+    return { from, to };
   }
 
   template() {
